@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import BASE_URL from "@/config/BaseUrl";
+import {EXCEL_URL}  from "@/config/BaseUrl";
 import { ButtonConfig } from "@/config/ButtonConfig";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
@@ -276,23 +277,19 @@ const CreateUploadData = ({ onSuccess }) => {
               </p>
             </div>
             <Button
-              variant="outline"
-              size="sm"
-              onClick={() =>
-                window.open(
-                  `https://agsdemo.in/emapi/public/assets/images/excel/${
-                    formData.data_type === "Individual"
-                      ? "Individual.xlsx"
-                      : "Common.xlsx"
-                  }`,
-                  "_blank",
-                )
-              }
-              className="text-xs h-7 px-2 bg-gray-50 hover:bg-yellow-50 border-gray-200"
-            >
-              <Download className="h-3 w-3 mr-1" />
-              Download {formData.data_type} Sample
-            </Button>
+  variant="outline"
+  size="sm"
+  onClick={() =>
+    window.open(
+      `${EXCEL_URL}/${formData.data_type === "Individual" ? "Individual.xlsx" : "Common.xlsx"}`,
+      "_blank"
+    )
+  }
+  className="text-xs h-7 px-2 bg-gray-50 hover:bg-yellow-50 border-gray-200"
+>
+  <Download className="h-3 w-3 mr-1" />
+  Download {formData.data_type} Sample
+</Button>
           </div>
 
           {/* File Attached */}
