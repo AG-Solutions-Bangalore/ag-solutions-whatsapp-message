@@ -389,6 +389,7 @@ const CreateCampaignDialog = ({ open, onOpenChange, onSuccess }) => {
                 />
               </div>
 
+
               <div className="space-y-1.5 md:col-span-3">
                 <Label htmlFor="campaign_image_url">Campaign Image URL</Label>
                 <Input
