@@ -336,7 +336,7 @@ const CreateCampaignDialog = ({ open, onOpenChange, onSuccess }) => {
           </section>
 
           {/* Campaign Content */}
-          <section className="overflow-hidden rounded-xl border border-gray-200">
+          {/* <section className="overflow-hidden rounded-xl border border-gray-200">
             <div className="border-b bg-slate-50 px-4 py-3">
               <h3 className="text-sm font-semibold text-gray-800">
                 Campaign Content
@@ -406,7 +406,7 @@ const CreateCampaignDialog = ({ open, onOpenChange, onSuccess }) => {
                 </p>
               </div>
             </div>
-          </section>
+          </section> */}
         </div>
 
         <DialogFooter className="border-t bg-white px-6 py-4">
@@ -908,52 +908,52 @@ const CampaignList = () => {
       header: "Pipeline Template",
       cell: ({ row }) => <div>{row.getValue("pipeline_sub_template")}</div>,
     },
-    {
-      accessorKey: "campaign_v1",
-      header: "Campaign V1",
-      cell: ({ row }) => (
-        <div className="max-w-[220px] whitespace-pre-wrap break-words">
-          {row.getValue("campaign_v1") || "-"}
-        </div>
-      ),
-    },
-    {
-      accessorKey: "campaign_v2",
-      header: "Campaign V2",
-      cell: ({ row }) => (
-        <div className="max-w-[220px] whitespace-pre-wrap break-words">
-          {row.getValue("campaign_v2") || "-"}
-        </div>
-      ),
-    },
-    {
-      accessorKey: "campaign_v3",
-      header: "Campaign V3",
-      cell: ({ row }) => (
-        <div className="max-w-[220px] whitespace-pre-wrap break-words">
-          {row.getValue("campaign_v3") || "-"}
-        </div>
-      ),
-    },
-    {
-      accessorKey: "campaign_image_url",
-      header: "Campaign Image URL",
-      cell: ({ row }) => {
-        const imageUrl = row.getValue("campaign_image_url");
-        return imageUrl ? (
-          <a
-            href={imageUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="max-w-[220px] break-all text-blue-600 underline"
-          >
-            {imageUrl}
-          </a>
-        ) : (
-          "-"
-        );
-      },
-    },
+    // {
+    //   accessorKey: "campaign_v1",
+    //   header: "Campaign V1",
+    //   cell: ({ row }) => (
+    //     <div className="max-w-[220px] whitespace-pre-wrap break-words">
+    //       {row.getValue("campaign_v1") || "-"}
+    //     </div>
+    //   ),
+    // },
+    // {
+    //   accessorKey: "campaign_v2",
+    //   header: "Campaign V2",
+    //   cell: ({ row }) => (
+    //     <div className="max-w-[220px] whitespace-pre-wrap break-words">
+    //       {row.getValue("campaign_v2") || "-"}
+    //     </div>
+    //   ),
+    // },
+    // {
+    //   accessorKey: "campaign_v3",
+    //   header: "Campaign V3",
+    //   cell: ({ row }) => (
+    //     <div className="max-w-[220px] whitespace-pre-wrap break-words">
+    //       {row.getValue("campaign_v3") || "-"}
+    //     </div>
+    //   ),
+    // },
+    // {
+    //   accessorKey: "campaign_image_url",
+    //   header: "Campaign Image URL",
+    //   cell: ({ row }) => {
+    //     const imageUrl = row.getValue("campaign_image_url");
+    //     return imageUrl ? (
+    //       <a
+    //         href={imageUrl}
+    //         target="_blank"
+    //         rel="noopener noreferrer"
+    //         className="max-w-[220px] break-all text-blue-600 underline"
+    //       >
+    //         {imageUrl}
+    //       </a>
+    //     ) : (
+    //       "-"
+    //     );
+    //   },
+    // },
     {
       accessorKey: "campaign_date",
       header: "Campaign Date",
