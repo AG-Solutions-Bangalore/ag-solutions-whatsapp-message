@@ -147,14 +147,12 @@ const CreateCampaignDialog = ({ open, onOpenChange, onSuccess }) => {
 
   const handleSubmit = async () => {
     const errors = [];
-    if (!formData.campaign_date)
-      errors.push("Please select campaign date.");
+    if (!formData.campaign_date) errors.push("Please select campaign date.");
     if (!formData.campaign_name.trim())
       errors.push("Please enter campaign name.");
     if (!formData.branch_id.length)
       errors.push("Please select at least one branch.");
-    if (!formData.pipeline_id)
-      errors.push("Please select a pipeline.");
+    if (!formData.pipeline_id) errors.push("Please select a pipeline.");
     if (!formData.data_status.length)
       errors.push("Please select atleast one campaign status.");
 
@@ -225,7 +223,8 @@ const CreateCampaignDialog = ({ open, onOpenChange, onSuccess }) => {
             Create Campaign
           </DialogTitle>
           <DialogDescription className="text-sm text-gray-500">
-            Add campaign details, select where it applies, and enter the campaign content.
+            Add campaign details, select where it applies, and enter the
+            campaign content.
           </DialogDescription>
         </DialogHeader>
 
@@ -446,6 +445,7 @@ const UpdateCampaignDialog = ({
   const [updatePipelineId, setUpdatePipelineId] = useState("");
   const [updateSubPipelineId, setUpdateSubPipelineId] = useState("");
   const [updateCampaignSent, setUpdateCampaignSent] = useState("");
+  const [UpdateCampSentStatus, setUpdateCampSentStatus] = useState("");
   const [updateSubPipelines, setUpdateSubPipelines] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -497,6 +497,14 @@ const UpdateCampaignDialog = ({
       });
       return;
     }
+    if (!UpdateCampSentStatus) {
+      toast({
+        title: "Error",
+        description: "Please select a campaign sent status.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     if (!updateCampaignSent) {
       toast({
@@ -514,6 +522,7 @@ const UpdateCampaignDialog = ({
         {
           branch_id: updateBranchId,
           pipeline_sub_id: updateSubPipelineId,
+          campaign_already_sent: UpdateCampSentStatus,
           campaign_sent: updateCampaignSent,
         },
         {
@@ -524,17 +533,22 @@ const UpdateCampaignDialog = ({
       if (response?.data?.code === 200) {
         toast({
           title: "Success",
-          description: response.data.msg || "Campaign status updated.",
+          description:
+            response.data.msg || "Campaign status updated successfully.",
         });
         setUpdateBranchId("");
         setUpdateSubPipelineId("");
+        setUpdateCampSentStatus("");
         setUpdateCampaignSent("");
         onOpenChange(false);
         if (onSuccess) onSuccess();
       } else {
-        throw new Error(
-          response?.data?.msg || "Failed to update campaign status.",
-        );
+        toast({
+          title: "Error",
+          description:
+            response?.data?.msg || "Failed to update campaign status.",
+          variant: "destructive",
+        });
       }
     } catch (error) {
       toast({
@@ -542,6 +556,7 @@ const UpdateCampaignDialog = ({
         description:
           error.response?.data?.msg ||
           error.response?.data?.message ||
+          error.message ||
           "Failed to update campaign status.",
         variant: "destructive",
       });
@@ -555,7 +570,8 @@ const UpdateCampaignDialog = ({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <RefreshCw className="h-5 w-5 text-blue-600" /> Update Campaign Status
+            <RefreshCw className="h-5 w-5 text-blue-600" /> Update Campaign
+            Status
           </DialogTitle>
           <DialogDescription>
             Select branch, sub pipeline and target status to update campaigns.
@@ -584,6 +600,15 @@ const UpdateCampaignDialog = ({
               placeholder="Select Sub Pipeline"
               getLabel={(sub) => sub.pipeline_sub_name || sub.name || sub.id}
               getValue={(sub) => String(sub.id)}
+            />
+          </div>
+          <div>
+            <Label>Campaign sent Status</Label>
+            <SearchSelect
+              options={["Sent", "Pending", "Hold"]}
+              value={UpdateCampSentStatus}
+              onChange={setUpdateCampSentStatus}
+              placeholder="Select Campaign Sent Status"
             />
           </div>
 
@@ -748,7 +773,7 @@ const DeleteCampaignDialog = ({
             <Trash2 className="h-5 w-5" /> Delete Campaign
           </DialogTitle>
           <DialogDescription>
-            Select branch, sub pipeline and statuses to delete campaigns.
+            Select branch, sub pipeline and status to delete campaigns.
           </DialogDescription>
         </DialogHeader>
 
@@ -778,12 +803,12 @@ const DeleteCampaignDialog = ({
           </div>
 
           <div>
-            <Label>Campaign Sent Statuses</Label>
+            <Label>Campaign Sent Status</Label>
             <SearchSelect
               options={["Sent", "Pending", "Hold"]}
               value={deleteCampaignSent}
               onChange={setDeleteCampaignSent}
-              placeholder="Select Statuses"
+              placeholder="Select Status"
               multiple={true}
             />
           </div>
@@ -1105,9 +1130,9 @@ const CampaignList = () => {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
                     </TableHead>
                   ))}
                 </TableRow>
